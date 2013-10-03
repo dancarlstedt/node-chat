@@ -1,3 +1,7 @@
+function divEscapedContentElementLink(message){
+	return $('<div class="btn btn-link"></div>').text(message);
+}
+
 function divEscapedContentElement(message){
 	return $('<div></div>').text(message);
 }
@@ -13,9 +17,9 @@ function processUserInput(chatApp, socket){
 	if(message.charAt(0) == '/'){
 		systemMessage = chatApp.processCommand(message);
 		if(systemMessage){
-			$('#message').append(divSystemConentElement(systemMessage));
-		}
-		else{
+			$('#messages').append(divSystemConentElement(systemMessage));
+		}		
+	}else{
 			chatApp.sendMessage($('#room').text(), message);
 			$('#messages').append(divEscapedContentElement(message));
 			$('#messages').scrollTop($('#messages').prop('scrollHeight'));
@@ -23,4 +27,3 @@ function processUserInput(chatApp, socket){
 
 		$('#send-message').val('');
 	}
-}

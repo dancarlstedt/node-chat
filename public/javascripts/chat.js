@@ -57,7 +57,7 @@ $(document).ready(function(){
 		 $('#messages').append(divSystemConentElement(message));
 	});
 
-	socket.on('join', function(result){
+	socket.on('joinResult', function(result){
 		$('#room').text(result.room);
 		$('#messages').append(divSystemConentElement('Room Changed'));
 	});
@@ -70,17 +70,16 @@ $(document).ready(function(){
 	socket.on('rooms', function(rooms){
 		$('#room-list').empty();
 
-		for(var room in rooms){
-			room = room.subString(1, room.length);
-			if(room != ''){
-				$('#room-list').append(divEscapedContentElement(room));
+		for(var index in rooms){
+			if(rooms[index] != ''){
+				$('#room-list').append(divEscapedContentElementLink(rooms[index]));
 			}
 		}
 
-		$(( '#room-list div').click(function() {
-			chatApp.processCommand('/join' + $(this).text());
+		$('#room-list div').click(function() {
+			chatApp.processCommand('/join ' + $(this).text());
 			$('#send-message').focus();
-		}));
+		});
 	});
 
 	setInterval(function() {
@@ -93,4 +92,4 @@ $(document).ready(function(){
 		processUserInput(chatApp, socket);
 		return false;
 	});
-});
+}); 	 	
